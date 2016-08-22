@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace和定义的Mapper接口对应，并实现其中的方法 -->
+<mapper namespace="com.lscr.mapper.RequestMapper">
+	<!-- id和mapper接口中的方法名对应，resultType使用mybatis.xml中的别名 -->
+	<select id="lscrswitch" parameterType="param" resultType="app">  
+         <![CDATA[
+             SELECT lscr_in_status,lscr_out_status FROM DG_APP WHERE id=#{appid}
+         ]]>
+	</select>
+
+	<select id="getSoftAdv" parameterType="param" resultType="soft">  
+         <![CDATA[
+  SELECT id,NAME,apk apkurl,softindex lsindex,screenimg imgurl,pck,logo ,lcode lscode,category FROM DG_SOFT 
+   WHERE   lstatus=1 AND  lcode>#{lscode} AND (CARRIEROPERATOR=0 OR CARRIEROPERATOR=#{carrieroperator})     ORDER BY lcode  LIMIT 0,1
+   ]]>
+	</select>
+	<select id="getEntityAdv" parameterType="param" resultType="entity">  
+         <![CDATA[
+        SELECT id,NAME,imgurl,LINKURL,advindex lsindex,priority FROM zy_adv 
+   WHERE   priority>#{lscode}  AND STATUS=2  ORDER BY priority LIMIT 0,1
+      ]]>
+	</select>
+
+	<select id="lscrcount" parameterType="param" resultType="app">  
+         <![CDATA[
+SELECT lscr_out_count  FROM DG_APP WHERE id=#{appid}
+     ]]>
+	</select>
+ 
+	<delete id="delete" parameterType="param">
+	    delete from  ${table} where imei=#{imei} and imsi=#{imsi}
+	</delete>
+</mapper>
